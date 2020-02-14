@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
 
+import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
@@ -48,7 +49,7 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //接收到分享以及登录的intent传递handleIntent方法，处理结果
         iwxapi = WXAPIFactory.createWXAPI(this, APP_ID, false);
-        iwxapi.handleIntent(getIntent(), this);
+        iwxapi.handleIntent(getIntent(), this); // 第三步
 
     }
 
@@ -71,7 +72,8 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
     //请求回调结果处理
     @Override
     public void onResp(BaseResp baseResp) {
-        //登录回调
+        //登录回调 第四步
+//        baseResp.getType() == ConstantsAPI.COMMAND_SENDAUTH 登录
         switch (baseResp.errCode) {
             case BaseResp.ErrCode.ERR_OK:
 
@@ -93,7 +95,7 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
 
     private void getAccessToken(String code) {
         createProgressDialog();
-        //获取授权
+        //获取授权 第5步
         StringBuffer loginUrl = new StringBuffer();
         loginUrl.append("https://api.weixin.qq.com/sns/oauth2/access_token")
                 .append("?appid=")
@@ -115,17 +117,37 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.d("fan12", "onFailure: ");
-                mProgressDialog.dismiss();
+                mProgressDialog.dismiss(); //第6步
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String responseInfo= response.body().string();
-                Log.d("fan12", "onResponse: " +responseInfo);
+                Log.d("fan12", "onResponse: " +responseInfo);//第6步
 
                 String access = null;
                 String openId = null;
                 try {
+// 获取到的数据 这个时候已经算是登录成功了
+//                    {"access_token":
+//                        "30_9brj6JUiLXGglYj7XZqHme4T
+//                        eYmHL66ytLIo7FA-ztOlANFvBQVc
+//                        dkBQTqFqW3MnB4cSKP2voG9lW0Bl
+//                        qJrXKbBcuHBG5TQEKmsxCnpaS_4",
+//                        "expires_in":
+//                        7200,
+//                                "refresh_token":"
+//                        30_EKYUJuC5UsXjyHPrV5BMRZx5p
+//                            KeOrtQCFpg6v8_m3tuFRM4SW7158
+//                        wZpKIZjeI7j5FxWQoAA4xTTSBZf4
+//                        MurM5frt_KixlNBuvQyGlvPXRE",
+//                        "openid":
+//                        "o3P-o0h7AtyQNzOUTE1HisR9FYBk"
+//                                ,"scope":
+//                        "snsapi_userinfo",
+//                                "unionid":
+//                        "o-hLKwyy-LH1MghTTm3ZLb9Kiyjs"}
+
                     JSONObject jsonObject = new JSONObject(responseInfo);
                     access = jsonObject.getString("access_token");
                     openId = jsonObject.getString("openid");
@@ -141,6 +163,7 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
     }
 
     private void getUserInfo(String access, String openid) {
+        //第7步
         String getUserInfoUrl = "https://api.weixin.qq.com/sns/userinfo?access_token=" + access + "&openid=" + openid;
 
         OkHttpClient okHttpClient = new OkHttpClient();
@@ -152,12 +175,13 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.d("fan12", "onFailure: ");
+                Log.d("fan12", "onFailure: ");          //第八步
                 mProgressDialog.dismiss();
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                //第八步
                 String responseInfo= response.body().string();
                 Log.d("fan123", "onResponse: " + responseInfo);
                 SharedPreferences.Editor editor= getSharedPreferences("userInfo", MODE_PRIVATE).edit();

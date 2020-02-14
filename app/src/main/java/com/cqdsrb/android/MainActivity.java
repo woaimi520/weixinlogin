@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                     final SendAuth.Req req = new SendAuth.Req();
                     req.scope = "snsapi_userinfo";
                     req.state = "wechat_sdk_demo_test";
-                    api.sendReq(req);
+                    api.sendReq(req); // 第二步 登录
 
                 }
             }
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void regToWx() {
-        api = WXAPIFactory.createWXAPI(this, APP_ID, false);
+        api = WXAPIFactory.createWXAPI(this, APP_ID, false);// 第一步绑定威信api
         api.registerApp(APP_ID);
     }
 
