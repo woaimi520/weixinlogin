@@ -37,7 +37,8 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
     private ProgressBar progressBar;
     private WXEntryActivity mContext;
     private ProgressDialog mProgressDialog;
-
+    private static final String APP_ID = "wxa25161b2bbe40540"
+            ;private static final String APP_ECRET = "294aad898644a29925d7d698da04891c";//私钥
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +47,7 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //接收到分享以及登录的intent传递handleIntent方法，处理结果
-        iwxapi = WXAPIFactory.createWXAPI(this, "你的appid", false);
+        iwxapi = WXAPIFactory.createWXAPI(this, APP_ID, false);
         iwxapi.handleIntent(getIntent(), this);
 
     }
@@ -96,9 +97,9 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
         StringBuffer loginUrl = new StringBuffer();
         loginUrl.append("https://api.weixin.qq.com/sns/oauth2/access_token")
                 .append("?appid=")
-                .append("你的appid")
+                .append(APP_ID)
                 .append("&secret=")
-                .append("你的secret")
+                .append(APP_ECRET)
                 .append("&code=")
                 .append(code)
                 .append("&grant_type=authorization_code");
