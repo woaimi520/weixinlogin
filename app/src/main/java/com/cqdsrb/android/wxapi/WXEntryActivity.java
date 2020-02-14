@@ -1,4 +1,4 @@
-package com.isoftstone.quancai.wxapi;
+package com.cqdsrb.android.wxapi;
 
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;

@@ -1,4 +1,4 @@
-package com.isoftstone.quancai;
+package com.cqdsrb.android;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

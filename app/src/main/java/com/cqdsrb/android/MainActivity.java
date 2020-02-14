@@ -1,4 +1,4 @@
-package com.isoftstone.quancai;
+package com.cqdsrb.android;
 
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
