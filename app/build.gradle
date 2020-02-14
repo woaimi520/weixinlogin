@@ -4,10 +4,10 @@ android {
 
     signingConfigs {
         jiaoyuqianming {
-            keyAlias 'quancai'
-            keyPassword 'quancai'
+            keyAlias 'china'
+            keyPassword 'zsjzandroid'
             storeFile file('E:\\code\\android\\quancai 2\\zsjz_keystore.jks')
-            storePassword 'quancai'
+            storePassword 'zsjzandroid'
         }
     }
     compileSdkVersion 28
