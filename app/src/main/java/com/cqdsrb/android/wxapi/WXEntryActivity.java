@@ -38,11 +38,12 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
     private ProgressBar progressBar;
     private WXEntryActivity mContext;
     private ProgressDialog mProgressDialog;
-    private static final String APP_ID = "wxa25161b2bbe40540"
-            ;private static final String APP_ECRET = "294aad898644a29925d7d698da04891c";//私钥
+    private static final String APP_ID = "wxa25161b2bbe40540";
+    private static final String APP_ECRET = "294aad898644a29925d7d698da04891c";//私钥
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("renyu", "renyu wxactivity onCreate");
         getSupportActionBar().hide();
         // 隐藏状态栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -51,6 +52,30 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
         iwxapi = WXAPIFactory.createWXAPI(this, APP_ID, false);
         iwxapi.handleIntent(getIntent(), this); // 第三步
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("renyu", "renyu wxactivity onStart");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("renyu", "renyu wxactivity onPause");
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("renyu", "renyu wxactivity onResume");
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("renyu", "renyu wxactivity onStart");
     }
 
     private void createProgressDialog() {
@@ -192,6 +217,7 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
             }
         });
     }
+
 
 }
 
